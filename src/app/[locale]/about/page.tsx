@@ -11,22 +11,22 @@ export async function generateMetadata({
 	const t = await getTranslations({ locale });
 
 	return {
-		title: t("about.badge"),
-		description: t("about.summary_career"),
+		title: t("about.title"),
+		description: t("about.lede"),
 		icons: {
 			icon: "/favicon.ico",
 		},
 		openGraph: {
 			type: "website",
-			title: t("about.badge"),
-			description: t("about.summary_career"),
+			title: t("about.title"),
+			description: t("about.lede"),
 			url: "/about",
 			images: ["/og_image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
-			title: t("about.badge"),
-			description: t("about.summary_career"),
+			title: t("about.title"),
+			description: t("about.lede"),
 			site: "/about",
 			images: ["/og_image.png"],
 		},

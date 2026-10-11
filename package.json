@@ -10,7 +10,6 @@
 		"format:fix": "biome check --fix"
 	},
 	"dependencies": {
-		"@devnomic/marquee": "^1.0.2",
 		"@hookform/resolvers": "^5.9.1",
 		"@mdxeditor/editor": "^4.2.3",
 		"@radix-ui/react-accordion": "^1.2.3",

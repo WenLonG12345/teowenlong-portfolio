@@ -1,18 +1,35 @@
 {
 	"navbar": {
 		"home": "首页",
-		"blog": "博客",
 		"about": "关于",
-		"contact": "联系",
-		"switch_to_v1": "切换到 V1"
+		"projects": "项目",
+		"blog": "文章",
+		"contact": "联系"
 	},
 	"home": {
-		"hero_1": "嗨，我是",
-		"hero_2": "来自马来西亚的软件工程师，拥有 7 年以上经验",
-		"hero_3": "软件工程师，帮助企业推进数字化转型。为企业设计并交付其赖以运转的网页与移动平台。同时在 Medium 上撰写技术文章。",
-		"resume": "简历",
-		"contact_me": "联系我",
-		"available": "开放机会"
+		"experience": "工作经历",
+		"full_experience": "完整经历",
+		"projects": "项目",
+		"archive": "归档",
+		"all_projects": "全部 {count} 个项目",
+		"writing": "文章",
+		"all_writing": "全部文章",
+		"contact": "联系",
+		"contact_cta": "聊聊这个职位",
+		"now_building": "正在打造",
+		"now_title": "在 YTL AI Labs 打造 ILMUChat",
+		"range": "能力范围",
+		"layers": {
+			"interface": "界面",
+			"services": "服务",
+			"ai": "AI",
+			"cloud": "云",
+			"mobile": "移动端"
+		},
+		"ai_streaming": "LLM 流式输出",
+		"ai_voice": "语音智能体",
+		"stack": "技术栈",
+		"now_body": "马来西亚首个本地语言 AI 助手，我负责其界面的端到端打造。"
 	},
 	"stats": {
 		"badge": "我的成就",
@@ -30,60 +47,64 @@
 		"tab_label": "Medium 文章"
 	},
 	"project": {
-		"badge": "项目",
-		"title": "我的项目",
-		"description_1": "我的精选项目列表。",
-		"description_2": "我参与或过去制作的项目列表。",
-		"works": "作品",
+		"title": "项目",
+		"lede": "通过 twlworks 承接的项目、任职期间的工作，以及开源作品。",
+		"all": "全部",
+		"works": "工作",
 		"freelance": "自由职业 · twlworks",
-		"opensource": "开源"
+		"opensource": "开源",
+		"private": "未公开",
+		"filter": "筛选项目"
 	},
 	"about": {
-		"badge": "关于我",
-		"title_career": "职业生涯",
-		"title_education": "教育背景",
-		"summary_career": "我的职业生涯概述，展示了重要的职位和成就。",
-		"summary_education": "我的教育背景概述，重点介绍了重要的课程和成就。"
+		"title": "关于",
+		"lede": "七年横跨新闻媒体、AI 产品与移动应用 —— 以前端为主，需要时也做全栈。",
+		"title_career": "工作经历",
+		"title_education": "教育背景"
 	},
 	"contact": {
-		"badge": "联系",
-		"title": "与我联系",
-		"description_1": "有项目想法或需要更多信息？我随时为您提供帮助！",
-		"description_2": "如有任何疑问，请联系我，我会尽快回复您。",
-		"first_name": "名字",
-		"last_name": "姓氏",
+		"title": "聊一聊",
+		"lede": "在招前端或全栈工程师？发邮件最快 —— 我会在一两天内回复。",
+		"email_label": "邮箱",
+		"copy": "复制",
+		"copied": "已复制",
+		"elsewhere": "其他平台",
+		"resume_title": "简历",
+		"resume_body": "一页 PDF。",
+		"form_title": "或在这里留言",
+		"first_name": "名",
+		"last_name": "姓",
 		"email": "邮箱",
 		"subject": "主题",
-		"message": "消息",
-		"send_message": "发送消息",
-		"project_inquiry": "项目咨询",
-		"web_development": "网站开发",
-		"mobile_development": "移动应用开发",
-		"seo_and_website_ranking": "SEO 和网站排名",
-		"api_development": "API 开发",
-		"sent_success_title": "邮件客户端已打开！",
-		"sent_success_desc": "您的邮件客户端已预填好消息内容，请发送邮件完成您的询问。",
-		"send_another": "再发一条消息"
-	},
-	"skills": {
-		"badge": "技能",
-		"title": "我常用的前沿技能和技术列表。"
-	},
-	"footer": {
-		"quick_links": "快速导航",
-		"connect": "联系方式"
+		"message": "内容",
+		"send_message": "用邮件应用打开",
+		"subject_job": "工作机会",
+		"subject_project": "项目咨询",
+		"subject_hello": "打个招呼",
+		"message_placeholder": "简单介绍一下职位或项目……",
+		"sent_success_title": "邮件应用已打开",
+		"sent_success_desc": "内容已预先填好 —— 在邮件应用里点击发送即可。",
+		"send_another": "再写一封"
 	},
 	"blog": {
-		"badge": "写作",
-		"title": "博客与文章",
-		"description_1": "我在此网站和 Medium 上发表的技术文章——教程、见解与真实项目经验。",
-		"description_2": "源于实践，欢迎分享！",
-		"empty": "暂无文章，敬请期待！",
-		"tab_label": "博客文章",
-		"tab_desc": "发布于此网站"
+		"title": "文章",
+		"lede": "来自真实项目的笔记 —— 发布在这里和 Medium。",
+		"tab_label": "文章",
+		"medium": "Medium 上的文章",
+		"empty": "暂无文章。",
+		"back": "全部文章",
+		"share": "分享"
 	},
 	"notFound": {
 		"description": "抱歉！您正在寻找的页面不存在或已被移动。",
 		"back_home": "返回首页"
+	},
+	"rail": {
+		"role": "软件工程师",
+		"tagline": "我帮助企业完成数字化转型，打造他们赖以运转的 Web、移动端与 AI 产品。",
+		"status": "开放新机会",
+		"resume": "简历",
+		"email": "发邮件给我",
+		"nav": "站点"
 	}
 }

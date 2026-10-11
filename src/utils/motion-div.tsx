@@ -1,9 +1,21 @@
 "use client";
 
-import { type HTMLMotionProps, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import {
+	type HTMLMotionProps,
+	MotionConfig,
+	motion,
+	useScroll,
+	useSpring,
+	type Variants,
+} from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
 export const MotionDiv = motion.div;
+
+/** Honour the OS reduced-motion setting for every motion component below it. */
+export const MotionProvider = ({ children }: { children: React.ReactNode }) => (
+	<MotionConfig reducedMotion="user">{children}</MotionConfig>
+);
 
 export const MotionSection = ({
 	children,
@@ -28,5 +40,89 @@ export const MotionSection = ({
 		<motion.div className={className} {...(domLoaded ? motionProps : {})}>
 			{children}
 		</motion.div>
+	);
+};
+
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+
+const groupVariants: Variants = {
+	hidden: {},
+	show: { transition: { staggerChildren: 0.07 } },
+};
+
+const itemVariants: Variants = {
+	hidden: { opacity: 0, y: 18 },
+	show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT } },
+};
+
+/** Bento section: <CascadeItem> children fade up one after another when the group scrolls into view. */
+export const Cascade = ({
+	className,
+	children,
+	...props
+}: HTMLMotionProps<"div">) => (
+	<motion.div
+		className={className}
+		variants={groupVariants}
+		initial="hidden"
+		whileInView="show"
+		viewport={{ once: true, margin: "-60px" }}
+		{...props}
+	>
+		{children}
+	</motion.div>
+);
+
+// ponytail: the item is only the entrance wrapper; hover lift lives on the inner tile so the two transforms never fight
+export const CascadeItem = ({
+	className,
+	children,
+	...props
+}: HTMLMotionProps<"div">) => (
+	<motion.div className={className} variants={itemVariants} {...props}>
+		{children}
+	</motion.div>
+);
+
+/** Fixed amber glow that trails the pointer. Hidden on touch and reduced-motion via CSS. */
+export const Spotlight = () => {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		let frame = 0;
+		const onMove = (e: PointerEvent) => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(() => {
+				ref.current?.style.setProperty("--spot-x", `${e.clientX}px`);
+				ref.current?.style.setProperty("--spot-y", `${e.clientY}px`);
+			});
+		};
+		window.addEventListener("pointermove", onMove, { passive: true });
+		return () => {
+			cancelAnimationFrame(frame);
+			window.removeEventListener("pointermove", onMove);
+		};
+	}, []);
+
+	return (
+		<div
+			ref={ref}
+			aria-hidden="true"
+			className="spotlight pointer-events-none fixed inset-0 -z-10"
+		/>
+	);
+};
+
+/** Thin amber bar along the top edge tracking how far the article has been read. */
+export const ReadingProgress = () => {
+	const { scrollYProgress } = useScroll();
+	const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
+
+	return (
+		<motion.div
+			aria-hidden="true"
+			style={{ scaleX }}
+			className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-primary"
+		/>
 	);
 };

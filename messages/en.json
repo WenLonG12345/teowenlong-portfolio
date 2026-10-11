@@ -1,18 +1,35 @@
 {
 	"navbar": {
 		"home": "Home",
-		"blog": "Blog",
 		"about": "About",
-		"contact": "Contact",
-		"switch_to_v1": "Switch to V1"
+		"projects": "Projects",
+		"blog": "Writing",
+		"contact": "Contact"
 	},
 	"home": {
-		"hero_1": "Hey, I am",
-		"hero_2": "Software Engineer from Malaysia with 7+ years of experience",
-		"hero_3": "Software Engineer helping businesses through digital transformation. I design and deliver the web and mobile platforms they run on. Tech Writer on Medium.",
-		"resume": "Resume",
-		"contact_me": "Contact Me",
-		"available": "Available for opportunities"
+		"experience": "Experience",
+		"full_experience": "Full experience",
+		"projects": "Projects",
+		"archive": "Archive",
+		"all_projects": "All {count} projects",
+		"writing": "Writing",
+		"all_writing": "All writing",
+		"contact": "Contact",
+		"contact_cta": "Let's talk about the role",
+		"now_building": "Now building",
+		"now_title": "ILMUChat at YTL AI Labs",
+		"range": "Range",
+		"layers": {
+			"interface": "Interface",
+			"services": "Services",
+			"ai": "AI",
+			"cloud": "Cloud",
+			"mobile": "Mobile"
+		},
+		"ai_streaming": "LLM streaming",
+		"ai_voice": "Voice agents",
+		"stack": "Stack",
+		"now_body": "Malaysia's first local-language AI assistant. I build and own its interface end to end."
 	},
 	"stats": {
 		"badge": "My Impact",
@@ -30,59 +47,64 @@
 		"tab_label": "Medium Articles"
 	},
 	"project": {
-		"badge": "Projects",
-		"title": "My Projects",
-		"description_1": "A list of my top featured projects.",
-		"description_2": "List of projects that I involved or have made in the past.",
-		"works": "Works",
+		"title": "Projects",
+		"lede": "Freelance builds through twlworks, work from my roles, and open source.",
+		"all": "All",
+		"works": "Work",
 		"freelance": "Freelance · twlworks",
-		"opensource": "Open Source"
+		"opensource": "Open source",
+		"private": "Private",
+		"filter": "Filter projects"
 	},
 	"about": {
-		"badge": "About Me",
-		"title_career": "Career",
-		"title_education": "Education",
-		"summary_career": "An overview of my professional journey, showcasing significant roles and accomplishments.",
-		"summary_education": "An overview of my educational background, highlighting important courses and achievements."
+		"title": "About",
+		"lede": "Seven years across news media, AI products and mobile — frontend first, full-stack when it helps.",
+		"title_career": "Experience",
+		"title_education": "Education"
 	},
 	"contact": {
-		"badge": "Contact",
-		"title": "Get in Touch with Me",
-		"description_1": "Have a project in mind or need more information? I am here to help!",
-		"description_2": "Reach out to me for any inquiries, and I'll get back to you promptly.",
-		"first_name": "First Name",
-		"last_name": "Last Name",
+		"title": "Let's talk",
+		"lede": "Hiring for a frontend or full-stack role? Email is fastest — I reply within a day or two.",
+		"email_label": "Email",
+		"copy": "Copy",
+		"copied": "Copied",
+		"elsewhere": "Elsewhere",
+		"resume_title": "Résumé",
+		"resume_body": "One page, PDF.",
+		"form_title": "Or write here",
+		"first_name": "First name",
+		"last_name": "Last name",
 		"email": "Email",
 		"subject": "Subject",
 		"message": "Message",
-		"send_message": "Send Message",
-		"project_inquiry": "Project Inquiry",
-		"web_development": "Web Development",
-		"mobile_development": "Mobile Development",
-		"seo_and_website_ranking": "SEO and Website Ranking",
-		"api_development": "API Development",
-		"sent_success_title": "Email Client Opened!",
-		"sent_success_desc": "Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry.",
-		"send_another": "Send Another Message"
-	},
-	"skills": {
-		"badge": "Skills",
-		"title": "Top and latest technologies that I always use."
-	},
-	"footer": {
-		"quick_links": "Quick Links",
-		"connect": "Connect With Me"
+		"send_message": "Open in email app",
+		"subject_job": "Job opportunity",
+		"subject_project": "Project inquiry",
+		"subject_hello": "Just saying hello",
+		"message_placeholder": "A few lines about the role or project…",
+		"sent_success_title": "Your email app is open",
+		"sent_success_desc": "The message is pre-filled — hit send there to reach me.",
+		"send_another": "Write another"
 	},
 	"blog": {
-		"badge": "Writing",
-		"title": "My Blog & Articles",
-		"description_1": "Technical posts I write here and on Medium — tutorials, insights, and lessons from real projects.",
-		"description_2": "Written from experience. Feel free to share!",
-		"empty": "No posts yet. Check back soon!",
-		"tab_label": "Blog Posts"
+		"title": "Writing",
+		"lede": "Notes from real projects — here and on Medium.",
+		"tab_label": "Posts",
+		"medium": "On Medium",
+		"empty": "No posts yet.",
+		"back": "All writing",
+		"share": "Share"
 	},
 	"notFound": {
 		"description": "Oops! The page you're looking for doesn't exist or has been moved.",
 		"back_home": "Back to Home"
+	},
+	"rail": {
+		"role": "Software Engineer",
+		"tagline": "I help businesses through digital transformation, building the web, mobile and AI products they run on.",
+		"status": "Open to new roles",
+		"resume": "Résumé",
+		"email": "Email me",
+		"nav": "Site"
 	}
 }

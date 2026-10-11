@@ -10,8 +10,8 @@ export async function generateMetadata({
 	const t = await getTranslations({ locale });
 
 	return {
-		title: t("contact.badge"),
-		description: t("contact.title"),
+		title: t("contact.title"),
+		description: t("contact.lede"),
 		icons: {
 			icon: "/favicon.ico",
 		},
@@ -19,14 +19,14 @@ export async function generateMetadata({
 			type: "website",
 			title: t("contact.title"),
 			url: "/contact",
-			description: t("contact.description_1"),
+			description: t("contact.lede"),
 			images: ["/og_image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: t("contact.title"),
 			site: "/contact",
-			description: t("contact.description_1"),
+			description: t("contact.lede"),
 			images: ["/og_image.png"],
 		},
 	};

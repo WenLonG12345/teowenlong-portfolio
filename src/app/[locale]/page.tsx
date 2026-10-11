@@ -1,13 +1,18 @@
+import ExperienceSection from "@/components/layout/sections/experience";
 import HeroSection from "@/components/layout/sections/hero";
 import ProjectSection from "@/components/layout/sections/project";
-import SkillSetSection from "@/components/layout/sections/skill";
+import WritingSection from "@/components/layout/sections/writing";
+import { getAllPosts } from "@/utils/blog";
 
 export default function Home() {
+	const [latest] = getAllPosts();
+
 	return (
-		<>
+		<div className="flex flex-col gap-14">
 			<HeroSection />
-			<SkillSetSection />
+			<ExperienceSection />
 			<ProjectSection />
-		</>
+			<WritingSection post={latest} />
+		</div>
 	);
 }

@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
-
-import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { tile } from "@/components/ui/tile";
+import { SKILL_LIST } from "@/constants";
+import { cn } from "@/utils/cn";
 import CareerTabs from "./tabs/CareerTabs";
 import EducationTabs from "./tabs/EducationTabs";
 
@@ -11,37 +12,38 @@ const AboutClient = () => {
 	const t = useTranslations();
 
 	return (
-		<div className="container py-16">
-			<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl -z-10" />
+		<div className="flex flex-col gap-14">
+			<header className="flex flex-col gap-3">
+				<h1 className="text-4xl font-bold tracking-tight font-display md:text-5xl">
+					{t("about.title")}
+				</h1>
+				<p className="max-w-[56ch] text-muted-foreground">{t("about.lede")}</p>
+			</header>
 
-			<Tabs defaultValue="career">
-				<div className="flex items-center justify-center mb-10">
-					<TabsList className="h-auto gap-1 p-1">
-						<TabsTrigger
-							value="career"
-							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-xs"
+			<CareerTabs />
+
+			<section className="flex flex-col gap-4">
+				<h2 className="text-2xl font-bold font-display">{t("home.stack")}</h2>
+				<ul className={cn(tile, "flex flex-wrap gap-2 p-5")}>
+					{SKILL_LIST.map((skill) => (
+						<li
+							key={skill.name}
+							className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium rounded-full bg-secondary"
 						>
-							<LuBriefcase size={15} />
-							{t("about.title_career")}
-						</TabsTrigger>
-						<TabsTrigger
-							value="education"
-							className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg data-[state=active]:shadow-xs"
-						>
-							<LuGraduationCap size={15} />
-							{t("about.title_education")}
-						</TabsTrigger>
-					</TabsList>
-				</div>
+							<Image
+								src={skill.icon}
+								width={14}
+								height={14}
+								alt=""
+								aria-hidden="true"
+							/>
+							{skill.name}
+						</li>
+					))}
+				</ul>
+			</section>
 
-				<TabsContent value="career">
-					<CareerTabs />
-				</TabsContent>
-
-				<TabsContent value="education">
-					<EducationTabs />
-				</TabsContent>
-			</Tabs>
+			<EducationTabs />
 		</div>
 	);
 };

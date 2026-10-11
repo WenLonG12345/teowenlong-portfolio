@@ -18,15 +18,15 @@ export const contentType = "image/png";
 
 // Locked tokens. Every colour below is a named entry here — no inline literals in the tree.
 const t = {
-	gradFrom: "#041B3F",
-	gradTo: "#0B4FC0",
-	ink: "#F3F7FE",
-	muted: "#B4C9EC",
-	accent: "#8FBBFF",
-	disc: "#F3F7FE",
-	rule: "rgba(243,247,254,0.24)",
-	pillBg: "rgba(243,247,254,0.10)",
-	pillBorder: "rgba(243,247,254,0.34)",
+	gradFrom: "#141210",
+	gradTo: "#3A230F",
+	ink: "#F2EEE6",
+	muted: "#C4B8AC",
+	accent: "#E9A465",
+	disc: "#F2EEE6",
+	rule: "rgba(242,238,230,0.24)",
+	pillBg: "rgba(242,238,230,0.10)",
+	pillBorder: "rgba(242,238,230,0.34)",
 };
 
 // Static per-weight TTFs (Google Fonts serves these to legacy user agents); satori

@@ -2,25 +2,95 @@
 
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { CalendarIcon } from "lucide-react";
+import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { arrowOut, tile, tileLabel, tileLift } from "@/components/ui/tile";
 import type { BlogPostMeta } from "@/constants/types";
 import { Link } from "@/i18n/routing";
 import { getMediumArticles } from "@/utils/api";
-import { MotionDiv, MotionSection } from "@/utils/motion-div";
+import { cn } from "@/utils/cn";
+import { Cascade, CascadeItem } from "@/utils/motion-div";
 
 interface BlogClientProps {
 	posts: BlogPostMeta[];
 }
+
+type Entry = {
+	key: string;
+	href: string;
+	external: boolean;
+	image?: string;
+	// display-ready, e.g. "Mar 27, 2025"
+	date: string;
+	title: string;
+	description: string;
+	tags: string[];
+};
+
+const EntryTile = ({ entry }: { entry: Entry }) => {
+	const body = (
+		<>
+			<div className="relative overflow-hidden aspect-16/9 bg-primary/10">
+				{entry.image ? (
+					<Image
+						src={entry.image}
+						alt=""
+						fill
+						sizes="(min-width: 768px) 400px, 100vw"
+						className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
+					/>
+				) : (
+					<span className="absolute text-5xl font-bold inset-5 font-display text-primary/40">
+						{entry.title.charAt(0)}
+					</span>
+				)}
+			</div>
+			<div className="flex flex-col flex-1 gap-2.5 p-5">
+				<span className={tileLabel}>{entry.date}</span>
+				<span className="text-lg font-medium leading-snug font-display">
+					{entry.title}
+					{entry.external && (
+						<ArrowUpRightIcon aria-hidden="true" className={arrowOut} />
+					)}
+				</span>
+				<span className="text-sm text-muted-foreground line-clamp-2">
+					{entry.description}
+				</span>
+				<span className="flex flex-wrap gap-1.5 mt-auto pt-1">
+					{entry.tags.slice(0, 3).map((tag) => (
+						<span
+							key={tag}
+							className="px-2.5 py-1 text-xs rounded-full bg-secondary"
+						>
+							{tag}
+						</span>
+					))}
+				</span>
+			</div>
+		</>
+	);
+	const className = cn(
+		tile,
+		tileLift,
+		"group flex flex-col h-full overflow-hidden",
+	);
+
+	return entry.external ? (
+		<a
+			href={entry.href}
+			target="_blank"
+			rel="noopener noreferrer"
+			className={className}
+		>
+			{body}
+		</a>
+	) : (
+		<Link href={entry.href} className={className}>
+			{body}
+		</Link>
+	);
+};
 
 const BlogClient = ({ posts }: BlogClientProps) => {
 	const t = useTranslations();
@@ -30,204 +100,80 @@ const BlogClient = ({ posts }: BlogClientProps) => {
 		queryFn: () =>
 			getMediumArticles(process.env.NEXT_PUBLIC_MEDIUM_USERNAME || ""),
 	});
-	const articles = articlesQuery.data ?? [];
+
+	const local: Entry[] = posts.map((post) => ({
+		key: post.slug,
+		href: `/blog/${post.slug}`,
+		external: false,
+		image: post.coverImage || undefined,
+		date: dayjs(post.date).format("MMM D, YYYY"),
+		title: post.title,
+		description: post.description,
+		tags: post.tags,
+	}));
+	const medium: Entry[] = (articlesQuery.data ?? []).map((a) => ({
+		key: a.url,
+		href: a.url,
+		external: true,
+		image: a.thumbnail || undefined,
+		date: a.date,
+		title: a.title,
+		description: a.description,
+		tags: a.categories,
+	}));
 
 	return (
-		<div className="container py-16">
-			<div className="absolute top-2 lg:-top-20 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-60 bg-primary/50 rounded-full blur-3xl" />
-
-			{/* ── Page Header ── */}
-			<MotionSection
-				animationProps={{
-					initial: { opacity: 0, y: 50 },
-					whileInView: { opacity: 1, y: 0 },
-					transition: { duration: 0.5 },
-				}}
-			>
-				<h2 className="block mb-2 text-lg tracking-wider text-center text-primary md:hidden">
-					{t("blog.badge")}
-				</h2>
-				<h2 className="mb-4 text-3xl font-bold text-center md:text-4xl">
+		<div className="flex flex-col gap-14">
+			<header className="flex flex-col gap-3">
+				<h1 className="text-4xl font-bold tracking-tight font-display md:text-5xl">
 					{t("blog.title")}
+				</h1>
+				<p className="max-w-[56ch] text-muted-foreground">{t("blog.lede")}</p>
+			</header>
+
+			<section className="flex flex-col gap-4">
+				<h2 className="text-2xl font-bold font-display">
+					{t("blog.tab_label")}
 				</h2>
-				<p className="mx-auto mb-10 text-xl text-center md:w-1/2 text-muted-foreground">
-					{t("blog.description_1")}
-				</p>
-			</MotionSection>
+				{local.length === 0 ? (
+					<p className="text-muted-foreground">{t("blog.empty")}</p>
+				) : (
+					<Cascade className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+						{local.map((entry) => (
+							<CascadeItem key={entry.key}>
+								<EntryTile entry={entry} />
+							</CascadeItem>
+						))}
+					</Cascade>
+				)}
+			</section>
 
-			{/* ── Tabs ── */}
-			<MotionSection
-				animationProps={{
-					initial: { opacity: 0, y: 30 },
-					whileInView: { opacity: 1, y: 0 },
-					transition: { duration: 0.5, delay: 0.1 },
-				}}
-			>
-				<Tabs defaultValue="blog" className="w-full">
-					{/* Tab triggers */}
-					<div className="flex justify-center mb-8">
-						<TabsList className="h-auto gap-1 p-1">
-							<TabsTrigger
-								value="blog"
-								className="flex flex-col items-center gap-0.5 px-6 py-2.5 data-[state=active]:text-primary"
-							>
-								<div className="flex items-center gap-1.5 font-semibold">
-									{posts.length > 0 && (
-										<span className="inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none rounded-full bg-primary text-primary-foreground">
-											{posts.length}
-										</span>
-									)}
-									{t("blog.tab_label")}
-								</div>
-							</TabsTrigger>
-
-							<TabsTrigger
-								value="articles"
-								className="flex flex-col items-center gap-0.5 px-6 py-2.5 data-[state=active]:text-primary"
-							>
-								<div className="flex items-center gap-1.5 font-semibold">
-									{articles.length > 0 && (
-										<span className="inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none rounded-full bg-primary text-primary-foreground">
-											{articles.length}
-										</span>
-									)}
-									{t("article.tab_label")}
-								</div>
-							</TabsTrigger>
-						</TabsList>
-					</div>
-
-					{/* ── Blog Posts Tab ── */}
-					<TabsContent value="blog">
-						{posts.length === 0 ? (
-							<p className="py-16 text-center text-muted-foreground">
-								{t("blog.empty")}
-							</p>
-						) : (
-							<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-								{posts.map((post, index) => (
-									<Link key={post.slug} href={`/blog/${post.slug}`}>
-										<MotionDiv
-											initial={{ opacity: 0, y: 20 }}
-											whileInView={{ opacity: 1, y: 0 }}
-											whileHover={{ y: -5 }}
-											transition={{ duration: 0.3, delay: index * 0.05 }}
-											className="h-full"
-										>
-											<Card className="h-full transition-colors hover:bg-muted">
-												<CardHeader className="flex flex-col p-0 space-y-0">
-													<div className="relative w-full h-[200px]">
-														{post.coverImage ? (
-															<Image
-																src={post.coverImage}
-																alt={post.title}
-																fill
-																className="object-cover rounded-t-lg"
-															/>
-														) : (
-															<div className="flex items-center justify-center w-full h-full rounded-t-lg bg-primary/10">
-																<span className="text-4xl font-bold select-none text-primary/30">
-																	{post.title.charAt(0)}
-																</span>
-															</div>
-														)}
-													</div>
-													<div className="flex flex-col gap-1 px-6 py-3">
-														<div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-															<CalendarIcon className="w-3 h-3 shrink-0" />
-															<span>
-																{dayjs(post.date).format("MMM D, YYYY")}
-															</span>
-														</div>
-														<h3 className="font-semibold leading-snug line-clamp-2">
-															{post.title}
-														</h3>
-													</div>
-												</CardHeader>
-												<CardContent>
-													<p className="text-sm break-words text-clip text-muted-foreground line-clamp-3">
-														{post.description}
-													</p>
-												</CardContent>
-												<CardFooter>
-													<div className="flex flex-row flex-wrap gap-x-1 gap-y-2">
-														{post.tags.map((tag) => (
-															<Badge key={tag} className="whitespace-nowrap">
-																{tag}
-															</Badge>
-														))}
-													</div>
-												</CardFooter>
-											</Card>
-										</MotionDiv>
-									</Link>
-								))}
-							</div>
-						)}
-					</TabsContent>
-
-					{/* ── Medium Articles Tab ── */}
-					<TabsContent value="articles">
-						{articlesQuery.isLoading ? (
-							<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-								{Array.from({ length: 6 }).map((_, i) => (
-									<div
-										key={String(i)}
-										className="rounded-lg bg-muted animate-pulse h-[380px]"
-									/>
-								))}
-							</div>
-						) : (
-							<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-								{articles.map((article, index) => (
-									<Link key={article.url} href={article.url} target="_blank">
-										<MotionDiv
-											initial={{ opacity: 0, y: 20 }}
-											whileInView={{ opacity: 1, y: 0 }}
-											whileHover={{ y: -5 }}
-											transition={{ duration: 0.3, delay: index * 0.05 }}
-											className="h-full"
-										>
-											<Card className="h-full transition-colors hover:bg-muted">
-												<CardHeader className="flex flex-col p-0 space-y-0">
-													<div className="relative w-full h-[200px]">
-														<Image
-															src={article.thumbnail ?? "/og_image.png"}
-															alt={article.title}
-															fill
-															className="object-cover rounded-t-lg"
-														/>
-													</div>
-													<div className="flex flex-row items-center gap-2 px-6 py-3 font-semibold">
-														{article.title}
-													</div>
-												</CardHeader>
-												<CardContent>
-													<p className="break-words text-clip text-muted-foreground">
-														{article.description}
-													</p>
-												</CardContent>
-												<CardFooter>
-													<div className="flex flex-row flex-wrap gap-x-1 gap-y-2">
-														{article.categories.map((category) => (
-															<Badge
-																key={category}
-																className="whitespace-nowrap"
-															>
-																{category}
-															</Badge>
-														))}
-													</div>
-												</CardFooter>
-											</Card>
-										</MotionDiv>
-									</Link>
-								))}
-							</div>
-						)}
-					</TabsContent>
-				</Tabs>
-			</MotionSection>
+			{/* Medium feed is empty when the username env var is unset — hide the section then */}
+			{(articlesQuery.isLoading || medium.length > 0) && (
+				<section className="flex flex-col gap-4">
+					<h2 className="text-2xl font-bold font-display">
+						{t("blog.medium")}
+					</h2>
+					{articlesQuery.isLoading ? (
+						<div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+							{Array.from({ length: 4 }, (_, i) => (
+								<div
+									key={String(i)}
+									className="rounded-2xl bg-muted animate-pulse h-80 motion-reduce:animate-none"
+								/>
+							))}
+						</div>
+					) : (
+						<Cascade className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+							{medium.map((entry) => (
+								<CascadeItem key={entry.key}>
+									<EntryTile entry={entry} />
+								</CascadeItem>
+							))}
+						</Cascade>
+					)}
+				</section>
+			)}
 		</div>
 	);
 };

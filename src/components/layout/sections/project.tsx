@@ -1,201 +1,125 @@
 "use client";
 
+import { ArrowRightIcon, ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import {
-	LuArrowRight,
-	LuBriefcase,
-	LuCode,
-	LuExternalLink,
-	LuGithub,
-	LuLock,
-} from "react-icons/lu";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PROJECT_LIST } from "@/constants";
+import { OriginBadge } from "@/components/ui/origin-badge";
+import { arrowOut, tile, tileLabel, tileLift } from "@/components/ui/tile";
+import { ALL_PROJECTS as ALL, FEATURED_PROJECTS } from "@/constants";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
-import { MotionDiv, MotionSection } from "@/utils/motion-div";
+import { Cascade, CascadeItem } from "@/utils/motion-div";
 
-type Project = (typeof PROJECT_LIST)[string][number];
+const FEATURED = FEATURED_PROJECTS.map((name) =>
+	ALL.find((p) => p.name === name),
+).filter((p) => p !== undefined);
 
-const ProjectCard = ({
-	project,
-	locale,
-	index,
-}: {
-	project: Project;
-	locale: string;
-	index: number;
-}) => {
-	const content = (
-		<MotionDiv
-			initial={{ opacity: 0, y: 20 }}
-			whileInView={{ opacity: 1, y: 0 }}
-			viewport={{ once: true }}
-			transition={{ duration: 0.35, delay: index * 0.06 }}
-			className="h-full"
-		>
-			<div
-				className={cn(
-					"h-full flex flex-col rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300",
-					project.link
-						? "cursor-pointer hover:border-primary/40 hover:shadow-lg group"
-						: "",
-				)}
-			>
-				{/* Image */}
-				<div className="relative overflow-hidden aspect-video shrink-0">
-					<Image
-						src={project.imageUrl}
-						alt={project.alt}
-						fill
-						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-						className="object-cover transition-transform duration-500 group-hover:scale-[1.04] bg-gray-400"
-					/>
+const zoom =
+	"object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:transition-none";
 
-					{/* Hover overlay — link projects */}
-					{project.link && (
-						<div className="absolute inset-0 bg-primary/85 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-							<span className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white border rounded-full border-white/30 bg-white/10">
-								View Project
-								<LuArrowRight size={14} />
-							</span>
-						</div>
-					)}
-
-					{/* Private badge — no-link projects */}
-					{!project.link && (
-						<div className="absolute top-3 right-3 flex items-center gap-1 text-xs bg-background/80 text-muted-foreground px-2.5 py-1 rounded-full backdrop-blur-xs border border-border/60">
-							<LuLock size={10} />
-							Private
-						</div>
-					)}
-				</div>
-
-				{/* Card body */}
-				<div className="flex flex-col flex-1 p-5">
-					<div className="flex items-start justify-between gap-2 mb-2">
-						<h3 className="text-base font-semibold leading-tight">
-							{project.name}
-						</h3>
-						{project.link && (
-							<LuExternalLink
-								size={14}
-								className="text-muted-foreground/40 group-hover:text-primary shrink-0 mt-0.5 transition-colors duration-200"
-							/>
-						)}
-					</div>
-
-					<p className="flex-1 mb-4 text-sm leading-relaxed text-muted-foreground">
-						{locale === "en" ? project.summary : project.summary_zh}
-					</p>
-
-					<div className="flex flex-wrap gap-1.5">
-						{project.tech?.map((stack) => (
-							<Badge
-								key={stack}
-								variant="secondary"
-								className="text-xs font-normal"
-							>
-								{stack}
-							</Badge>
-						))}
-					</div>
-				</div>
-			</div>
-		</MotionDiv>
-	);
-
-	return project.link ? (
-		<Link href={project.link} target="_blank" className="block h-full">
-			{content}
-		</Link>
-	) : (
-		<div className="h-full">{content}</div>
-	);
-};
-
+/** Home · projects: one wide featured tile, three small ones, and the archive tile. */
 const ProjectSection = () => {
 	const t = useTranslations();
 	const locale = useLocale();
+	const [lead, ...rest] = FEATURED;
+	const caption = (p: (typeof ALL)[number]) =>
+		(locale === "zh" ? p.tagline_zh : p.tagline) ?? p.summary;
 
 	return (
-		<section id="projects" className="container py-16 ">
-			<MotionSection
-				animationProps={{
-					initial: { opacity: 0, y: 30 },
-					whileInView: { opacity: 1, y: 0 },
-					transition: { duration: 0.5 },
-					className: "mb-10 text-center",
-				}}
-			>
-				<div className="inline-flex items-center gap-2 mb-3">
-					<div className="w-8 h-px bg-primary/40" />
-					<span className="text-sm font-medium tracking-widest uppercase text-primary">
-						{t("project.badge")}
-					</span>
-					<div className="w-8 h-px bg-primary/40" />
-				</div>
-				<h2 className="text-3xl font-bold md:text-4xl">
-					{t("project.description_1")}
-				</h2>
-			</MotionSection>
-
-			<Tabs
-				defaultValue={Object.keys(PROJECT_LIST)[0]}
-				className="w-full mx-auto lg:max-w-(--breakpoint-xl)"
-			>
-				{/* Tab triggers */}
-				<div className="flex justify-center mb-8">
-					<TabsList className="h-auto gap-1 p-1">
-						{Object.entries(PROJECT_LIST).map(([category]) => {
-							let icon = <LuBriefcase />;
-
-							switch (category) {
-								case "project.work":
-									icon = <LuBriefcase />;
-									break;
-								case "project.freelance":
-									icon = <LuCode />;
-									break;
-								case "project.opensource":
-									icon = <LuGithub />;
-									break;
-								default:
-									break;
-							}
-
-							return (
-								<TabsTrigger
-									key={category}
-									value={category}
-									className="px-4 py-2 text-sm font-medium rounded-lg data-[state=active]:shadow-xs flex items-center gap-2"
-								>
-									{icon}
-									{t(category)}
-								</TabsTrigger>
-							);
-						})}
-					</TabsList>
-				</div>
-
-				{/* Tab content */}
-				{Object.entries(PROJECT_LIST).map(([category, projects]) => (
-					<TabsContent key={category} value={category}>
-						<div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-							{projects.map((project, i) => (
-								<ProjectCard
-									key={project.name}
-									project={project}
-									locale={locale}
-									index={i}
-								/>
-							))}
+		<section id="projects" className="flex flex-col gap-4">
+			<h2 className="text-2xl font-bold font-display">{t("home.projects")}</h2>
+			<Cascade className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3">
+				<CascadeItem className="sm:col-span-2">
+					<a
+						href={lead.link}
+						target="_blank"
+						rel="noopener noreferrer"
+						className={cn(
+							tile,
+							tileLift,
+							"group relative flex items-end h-full min-h-64 overflow-hidden",
+						)}
+					>
+						<Image
+							src={lead.imageUrl}
+							alt={lead.alt}
+							fill
+							sizes="(min-width: 768px) 520px, 100vw"
+							className={zoom}
+						/>
+						<OriginBadge category={lead.category} />
+						<div className="relative px-4 py-3 m-3.5 rounded-xl bg-card/95 backdrop-blur-sm">
+							<p className="font-semibold">
+								{lead.name}
+								<ArrowUpRightIcon aria-hidden="true" className={arrowOut} />
+							</p>
+							<p className="text-[13px] text-muted-foreground">
+								{caption(lead)}
+							</p>
 						</div>
-					</TabsContent>
+					</a>
+				</CascadeItem>
+
+				{rest.map((project) => (
+					<CascadeItem key={project.name}>
+						<a
+							href={project.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							className={cn(
+								tile,
+								tileLift,
+								"group flex flex-col h-full overflow-hidden",
+							)}
+						>
+							<div className="relative overflow-hidden aspect-16/10">
+								<Image
+									src={project.imageUrl}
+									alt={project.alt}
+									fill
+									sizes="(min-width: 768px) 260px, 100vw"
+									className={zoom}
+								/>
+								<OriginBadge category={project.category} />
+							</div>
+							<div className="px-4 py-3.5">
+								<p className="font-semibold">
+									{project.name}
+									<ArrowUpRightIcon aria-hidden="true" className={arrowOut} />
+								</p>
+								<p className="text-[13px] text-muted-foreground">
+									{caption(project)}
+								</p>
+							</div>
+						</a>
+					</CascadeItem>
 				))}
-			</Tabs>
+
+				<CascadeItem>
+					<Link
+						href="/projects"
+						className={cn(
+							tileLift,
+							"group flex flex-col justify-between h-full gap-6 p-5 border-[1.5px] border-dashed rounded-2xl border-primary min-h-36",
+						)}
+					>
+						<span className="flex items-start justify-between gap-3">
+							<span className={cn(tileLabel, "text-primary-strong")}>
+								{t("home.archive")}
+							</span>
+							<span className="grid shrink-0 rounded-full size-9 place-items-center border transition-colors duration-200 motion-reduce:transition-none border-primary/50 text-primary-strong group-hover:bg-primary group-hover:text-primary-foreground">
+								<ArrowRightIcon
+									aria-hidden="true"
+									className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5 motion-reduce:transition-none"
+								/>
+							</span>
+						</span>
+						<span className="text-2xl font-bold leading-tight font-display">
+							{t("home.all_projects", { count: ALL.length })}
+						</span>
+					</Link>
+				</CascadeItem>
+			</Cascade>
 		</section>
 	);
 };

@@ -18,6 +18,10 @@ export const NAV_ITEM_LIST: NavItemProps[] = [
 		label: "navbar.about",
 	},
 	{
+		href: "/projects",
+		label: "navbar.projects",
+	},
+	{
 		href: "/blog",
 		label: "navbar.blog",
 	},
@@ -43,17 +47,17 @@ export const SITE_CONFIG = {
 		accounts: [
 			{
 				url: "https://github.com/WenLonG12345",
-				name: "Github",
+				name: "GitHub",
 				type: "gray",
 			},
 			{
 				url: "https://www.linkedin.com/in/teo-wen-long-19960316/",
-				name: "Linkedin",
+				name: "LinkedIn",
 				type: "linkedin",
 			},
 			{
 				url: "https://stackoverflow.com/users/12261890/teo",
-				name: "StackOverflow",
+				name: "Stack Overflow",
 				type: "orange",
 			},
 			{
@@ -77,6 +81,9 @@ export const PROJECT_LIST: {
 		alt: string;
 		summary: string;
 		summary_zh?: string;
+		// two-to-four words for bento tiles; only featured projects need it
+		tagline?: string;
+		tagline_zh?: string;
 		link?: string;
 		tech: string[];
 	}[];
@@ -84,6 +91,8 @@ export const PROJECT_LIST: {
 	"project.works": [
 		{
 			name: "ILMUChat",
+			tagline: "AI assistant that speaks Malaysian",
+			tagline_zh: "会说马来西亚话的 AI 助手",
 			imageUrl: "/images/ilmuchat.jpg",
 			alt: "ilmuchat",
 			summary:
@@ -95,6 +104,8 @@ export const PROJECT_LIST: {
 		},
 		{
 			name: "Revocall",
+			tagline: "AI voice agents",
+			tagline_zh: "AI 语音代理",
 			imageUrl: "/images/revocall.png",
 			alt: "revocall",
 			summary:
@@ -116,6 +127,8 @@ export const PROJECT_LIST: {
 		},
 		{
 			name: "Astro News Portals",
+			tagline: "2M+ monthly users",
+			tagline_zh: "月活跃用户 200 万+",
 			imageUrl: "/images/astro_vortals.png",
 			alt: "AstroVortals",
 			summary:
@@ -172,6 +185,8 @@ export const PROJECT_LIST: {
 	"project.freelance": [
 		{
 			name: "Hercules Factory Management System",
+			tagline: "Class booking for a Muay Thai gym",
+			tagline_zh: "泰拳馆课程预约系统",
 			imageUrl: "/images/hercules.png",
 			alt: "hercules-factory",
 			summary:
@@ -183,6 +198,8 @@ export const PROJECT_LIST: {
 		},
 		{
 			name: "Regal Global",
+			tagline: "Property and tenancy platform",
+			tagline_zh: "房产与租赁管理平台",
 			imageUrl: "/images/regal.png",
 			alt: "regal-global",
 			summary:
@@ -194,7 +211,9 @@ export const PROJECT_LIST: {
 		},
 		{
 			name: "TCGKL",
-			imageUrl: "/images/tcgkl-logo.webp",
+			tagline: "TCG community platform",
+			tagline_zh: "集换式卡牌社区平台",
+			imageUrl: "/images/tcgkl.png",
 			alt: "tcgkl",
 			summary:
 				"Malaysia's premier trading card game (TCG) convention and community platform, organizing major events for collectors and players of Pokémon, One Piece, Magic: The Gathering, and more",
@@ -391,9 +410,32 @@ export const SKILL_LIST = [
 	},
 ];
 
+// projects surfaced as bento tiles on the home page, in order
+const withCategory = (category: string) =>
+	PROJECT_LIST[category].map((p) => ({ ...p, category }));
+const FREELANCE = withCategory("project.freelance");
+const WORKS = withCategory("project.works");
+
+// freelance leads, work interleaved one-for-one, open source last
+export const ALL_PROJECTS = [
+	...FREELANCE.flatMap((p, i) => (WORKS[i] ? [p, WORKS[i]] : [p])),
+	...WORKS.slice(FREELANCE.length),
+	...withCategory("project.opensource"),
+];
+
+// home tiles: the first one renders wide
+export const FEATURED_PROJECTS = [
+	"Hercules Factory Management System",
+	"ILMUChat",
+	"Regal Global",
+	"TCGKL",
+];
+
 export const CAREER_LIST = [
 	{
 		title: "YTL AI Labs",
+		highlight: "AI product interfaces, streaming LLM responses.",
+		highlight_zh: "AI 产品界面，LLM 流式响应。",
 		alt: "ytl",
 		url: "https://www.ytlailabs.com",
 		role: "Senior Frontend Engineer",
@@ -419,6 +461,8 @@ export const CAREER_LIST = [
 	},
 	{
 		title: "Revolab Sdh Bhd",
+		highlight: "AI voice-agent platform on Go + ConnectRPC.",
+		highlight_zh: "基于 Go + ConnectRPC 的 AI 语音代理平台。",
 		alt: "revolab image",
 		url: "https://www.revolab.com/",
 		role: "Senior Frontend Engineer",
@@ -444,6 +488,9 @@ export const CAREER_LIST = [
 	},
 	{
 		title: "Astro",
+		metric: "+89%",
+		highlight: "pageviews after the Next.js move.",
+		highlight_zh: "迁移至 Next.js 后的页面浏览量增长。",
 		alt: "astro image",
 		url: "https://www.astro.com.my/",
 		role: "Senior Associate Frontend Engineer",
@@ -471,6 +518,8 @@ export const CAREER_LIST = [
 	},
 	{
 		title: "Qumon Intelligence",
+		highlight: "Android and React Native apps on Google Play.",
+		highlight_zh: "上架 Google Play 的 Android 与 React Native 应用。",
 		alt: "qumon image",
 		url: "https://www.qumonintelligence.com/",
 		role: "Software Engineer",

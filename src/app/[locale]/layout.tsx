@@ -1,11 +1,10 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import BackToTop from "@/components/layout/back-to-top";
 import Footer from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import ReactQueryProvider from "@/components/layout/react-query-provider";
@@ -13,6 +12,7 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import { METADATA } from "@/constants";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
+import { MotionProvider, Spotlight } from "@/utils/motion-div";
 
 import "./globals.css";
 
@@ -25,6 +25,10 @@ const display = Bricolage_Grotesque({
 	variable: "--font-bricolage",
 });
 const body = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
+const mono = JetBrains_Mono({
+	subsets: ["latin"],
+	variable: "--font-jetbrains",
+});
 
 export const metadata: Metadata = {
 	title: {
@@ -80,9 +84,10 @@ export default async function RootLayout({
 		<html lang={locale} suppressHydrationWarning>
 			<body
 				className={cn(
-					"min-h-screen bg-background",
+					"min-h-screen bg-background font-sans text-foreground antialiased",
 					display.variable,
 					body.variable,
+					mono.variable,
 				)}
 			>
 				<NextIntlClientProvider messages={messages}>
@@ -93,12 +98,17 @@ export default async function RootLayout({
 							enableSystem
 							disableTransitionOnChange
 						>
-							{/* <ClickSpark> */}
-							<Navbar />
-							{children}
-							<Footer />
-							<BackToTop />
-							{/* </ClickSpark> */}
+							<MotionProvider>
+								<Spotlight />
+								{/* Feature Stack shell: pinned rail left, bento content right */}
+								<div className="flex flex-col max-w-6xl px-5 mx-auto sm:px-8 lg:flex-row lg:gap-16 lg:px-10">
+									<Navbar />
+									<main className="flex-1 min-w-0 lg:py-20">
+										{children}
+										<Footer />
+									</main>
+								</div>
+							</MotionProvider>
 						</ThemeProvider>
 						<Analytics />
 						<SpeedInsights />

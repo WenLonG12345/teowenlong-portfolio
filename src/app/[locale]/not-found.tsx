@@ -1,39 +1,28 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { tile } from "@/components/ui/tile";
 import { Link } from "@/i18n/routing";
-import { MotionDiv } from "@/utils/motion-div";
+import { cn } from "@/utils/cn";
 
 const NotFoundPage = () => {
 	const t = useTranslations();
 
 	return (
-		<div className="container flex flex-col items-center justify-center min-h-[70vh] text-center gap-6 py-32">
-			<MotionDiv
-				initial={{ opacity: 0, y: 30 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
-				className="space-y-4"
+		<div className={cn(tile, "flex flex-col items-start gap-5 p-8 sm:p-10")}>
+			<p className="font-bold leading-none text-8xl font-display text-primary">
+				404
+			</p>
+			<h1 className="text-3xl font-bold font-display">Page not found</h1>
+			<p className="max-w-md text-muted-foreground">
+				{t("notFound.description")}
+			</p>
+			<Link
+				href="/"
+				className="inline-flex items-center px-5 text-sm font-semibold rounded-xl min-h-11 bg-primary text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
 			>
-				<div className="text-8xl font-bold text-primary leading-none">404</div>
-				<h1 className="text-3xl font-semibold">Page Not Found</h1>
-				<p className="text-muted-foreground max-w-md mx-auto">
-					{t("notFound.description")}
-				</p>
-			</MotionDiv>
-
-			<MotionDiv
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 0.3, duration: 0.4 }}
-			>
-				<Link href="/">
-					<Button size="lg" aria-label="Back to home">
-						{t("notFound.back_home")}
-					</Button>
-				</Link>
-			</MotionDiv>
+				{t("notFound.back_home")}
+			</Link>
 		</div>
 	);
 };

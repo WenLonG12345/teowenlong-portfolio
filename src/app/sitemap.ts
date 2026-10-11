@@ -25,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 1,
 		},
 		{
+			url: "https://teowenlong.vercel.app/projects",
+			lastModified: new Date(),
+			changeFrequency: "monthly",
+			priority: 1,
+		},
+		{
 			url: "https://teowenlong.vercel.app/blog",
 			lastModified: new Date(),
 			changeFrequency: "weekly",

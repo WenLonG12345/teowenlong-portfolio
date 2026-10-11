@@ -14,21 +14,21 @@ export async function generateMetadata({
 	const t = await getTranslations({ locale });
 
 	return {
-		title: t("blog.badge"),
-		description: t("blog.title"),
+		title: t("blog.title"),
+		description: t("blog.lede"),
 		icons: { icon: "/favicon.ico" },
 		openGraph: {
 			type: "website",
 			title: t("blog.title"),
 			url: "/blog",
-			description: t("blog.description_1"),
+			description: t("blog.lede"),
 			images: ["/og_image.png"],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: t("blog.title"),
 			site: "/blog",
-			description: t("blog.description_1"),
+			description: t("blog.lede"),
 			images: ["/og_image.png"],
 		},
 	};

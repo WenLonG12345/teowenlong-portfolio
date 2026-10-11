@@ -20,7 +20,7 @@ export const getMediumArticles = async (username: string) => {
 						?.toString()
 						.match(/<img[^>]+src="([^">]+)"/)?.[1],
 					url: guid,
-					date: dayjs(pubDate).format("YYYY - MMM DD"),
+					date: dayjs(pubDate).format("MMM D, YYYY"),
 					description: shortenDescription(description),
 					categories: categories,
 				};

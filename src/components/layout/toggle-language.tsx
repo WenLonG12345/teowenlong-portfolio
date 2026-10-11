@@ -51,8 +51,12 @@ const ToggleLanguage = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="secondary" className="">
-					<IoLanguage className="mr-2" size={20} />
+				<Button
+					variant="ghost"
+					size="sm"
+					className="h-9 gap-1.5 px-2 font-mono text-xs text-muted-foreground hover:text-foreground"
+				>
+					<IoLanguage size={16} aria-hidden="true" />
 					{selectedLang?.shortTitle}
 				</Button>
 			</DropdownMenuTrigger>
