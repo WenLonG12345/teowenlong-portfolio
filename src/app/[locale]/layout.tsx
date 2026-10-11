@@ -43,7 +43,17 @@ export const metadata: Metadata = {
 	applicationName: METADATA.name,
 	authors: [{ name: METADATA.name, url: METADATA.url }],
 	creator: METADATA.name,
-	icons: { icon: "/favicon.ico" },
+	icons: {
+		icon: [
+			{ url: "/favicon.ico", sizes: "any" },
+			{
+				url: "/images/android/android-192-192.png",
+				type: "image/png",
+				sizes: "192x192",
+			},
+		],
+		apple: "/images/android/android-192-192.png",
+	},
 	manifest: "/manifest.json",
 	openGraph: {
 		type: "website",
