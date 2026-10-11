@@ -5,9 +5,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { tileLabel } from "@/components/ui/tile";
+import { METADATA } from "@/constants";
 import { Link } from "@/i18n/routing";
 import { getAllPosts, getPostBySlug } from "@/utils/blog";
 import { ReadingProgress } from "@/utils/motion-div";
+import { jsonLd, PERSON } from "@/utils/seo";
 import ShareButtons from "./ShareButtons";
 
 interface BlogPostPageProps {
@@ -30,22 +32,29 @@ export async function generateMetadata({
 		return { title: t("notFound.description") };
 	}
 
+	const path = `/blog/${slug}`;
+	const ogImage = `/api/og/blog/${slug}`;
 	return {
 		title: post.title,
 		description: post.description,
-		icons: { icon: "/favicon.ico" },
+		// posts are written once, in English: /zh/blog/* serves the same text, so both point here
+		alternates: { canonical: path },
 		openGraph: {
 			type: "article",
+			siteName: METADATA.name,
+			url: path,
 			title: post.title,
-			url: `/blog/${slug}`,
 			description: post.description,
-			images: post.coverImage ? [post.coverImage] : ["/og_image.png"],
+			publishedTime: new Date(post.date).toISOString(),
+			authors: [METADATA.url],
+			tags: post.tags,
+			images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: post.title,
 			description: post.description,
-			images: post.coverImage ? [post.coverImage] : ["/og_image.png"],
+			images: [ogImage],
 		},
 	};
 }
@@ -61,6 +70,22 @@ const BlogPostPage = async ({ params }: BlogPostPageProps) => {
 
 	return (
 		<article className="max-w-3xl">
+			<script
+				type="application/ld+json"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD from local post front matter, `<` escaped in jsonLd()
+				dangerouslySetInnerHTML={jsonLd({
+					"@type": "BlogPosting",
+					headline: post.title,
+					description: post.description,
+					datePublished: new Date(post.date).toISOString(),
+					url: `${METADATA.url}/blog/${post.slug}`,
+					mainEntityOfPage: `${METADATA.url}/blog/${post.slug}`,
+					image: `${METADATA.url}/api/og/blog/${post.slug}`,
+					keywords: post.tags.join(", "),
+					inLanguage: "en",
+					author: { "@id": PERSON["@id"], name: PERSON.name, url: PERSON.url },
+				})}
+			/>
 			<ReadingProgress />
 			<Link
 				href="/blog"

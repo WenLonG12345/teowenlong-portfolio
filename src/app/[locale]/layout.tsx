@@ -12,7 +12,8 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import { METADATA } from "@/constants";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
-import { MotionProvider, Spotlight } from "@/utils/motion-div";
+import { MotionProvider } from "@/utils/motion-div";
+import { OG_IMAGE } from "@/utils/seo";
 
 import "./globals.css";
 
@@ -30,34 +31,32 @@ const mono = JetBrains_Mono({
 	variable: "--font-jetbrains",
 });
 
+// Site-wide defaults only. Canonical + hreflang are per page (utils/seo.ts): a canonical set
+// here would be inherited by every route and point them all at the home page.
 export const metadata: Metadata = {
+	metadataBase: new URL(METADATA.url),
 	title: {
 		default: METADATA.title,
 		template: METADATA.titleTemplate,
 	},
 	description: METADATA.description,
-	icons: {
-		icon: "/favicon.ico",
-	},
+	applicationName: METADATA.name,
+	authors: [{ name: METADATA.name, url: METADATA.url }],
+	creator: METADATA.name,
+	icons: { icon: "/favicon.ico" },
+	manifest: "/manifest.json",
 	openGraph: {
 		type: "website",
+		siteName: METADATA.name,
 		title: METADATA.title,
-		url: METADATA.url,
 		description: METADATA.description,
+		images: [OG_IMAGE],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: METADATA.title,
-		site: METADATA.url,
 		description: METADATA.description,
-	},
-	metadataBase: new URL(METADATA.url),
-	alternates: {
-		canonical: "/",
-		languages: {
-			en: "/",
-			zh: "/zh",
-		},
+		images: [OG_IMAGE.url],
 	},
 };
 
@@ -99,11 +98,10 @@ export default async function RootLayout({
 							disableTransitionOnChange
 						>
 							<MotionProvider>
-								<Spotlight />
 								{/* Feature Stack shell: pinned rail left, bento content right */}
 								<div className="flex flex-col max-w-6xl px-5 mx-auto sm:px-8 lg:flex-row lg:gap-16 lg:px-10">
 									<Navbar />
-									<main className="flex-1 min-w-0 lg:py-20">
+									<main className="flex-1 min-w-0 max-lg:pb-20 lg:py-20">
 										{children}
 										<Footer />
 									</main>

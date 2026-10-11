@@ -10,14 +10,9 @@
 		"experience": "工作经历",
 		"full_experience": "完整经历",
 		"projects": "项目",
-		"archive": "归档",
 		"all_projects": "全部 {count} 个项目",
-		"writing": "文章",
 		"all_writing": "全部文章",
-		"contact": "联系",
 		"contact_cta": "聊聊这个职位",
-		"now_building": "正在打造",
-		"now_title": "在 YTL AI Labs 打造 ILMUChat",
 		"range": "能力范围",
 		"layers": {
 			"interface": "界面",
@@ -29,7 +24,23 @@
 		"ai_streaming": "LLM 流式输出",
 		"ai_voice": "语音智能体",
 		"stack": "技术栈",
-		"now_body": "马来西亚首个本地语言 AI 助手，我负责其界面的端到端打造。"
+		"latest_post": "最新文章",
+		"studio_note": "自由职业项目通过 <studio>twlworks</studio> 交付。",
+		"build": {
+			"label": "我做什么",
+			"ai": {
+				"title": "AI 产品",
+				"body": "基于大模型的对话与语音界面。"
+			},
+			"web": {
+				"title": "Web 平台",
+				"body": "高流量网站，以及企业赖以运转的系统。"
+			},
+			"mobile": {
+				"title": "移动应用",
+				"body": "上架 Google Play 与 App Store 的 Android 和 iOS 应用。"
+			}
+		}
 	},
 	"stats": {
 		"badge": "我的成就",

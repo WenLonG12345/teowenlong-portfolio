@@ -14,7 +14,7 @@ interface ShareButtonsProps {
 const ShareButtons = ({ title, slug }: ShareButtonsProps) => {
 	const [copied, setCopied] = useState(false);
 
-	const postUrl = `${METADATA.url}blog/${slug}`;
+	const postUrl = `${METADATA.url}/blog/${slug}`;
 	const encodedUrl = encodeURIComponent(postUrl);
 	const encodedTitle = encodeURIComponent(title);
 

@@ -1,47 +1,31 @@
 import type { MetadataRoute } from "next";
+import { METADATA } from "@/constants";
+import { routing } from "@/i18n/routing";
 import { getAllPosts } from "@/utils/blog";
+import { localePath } from "@/utils/seo";
 
+const PAGES = ["/", "/about", "/projects", "/blog", "/contact"];
+const abs = (path: string) => `${METADATA.url}${path === "/" ? "" : path}`;
+
+// No priority/changeFrequency (Google ignores both) and no build-time lastModified on
+// static pages: a date that changes every deploy teaches crawlers to ignore it.
 export default function sitemap(): MetadataRoute.Sitemap {
-	const posts = getAllPosts();
+	const pages = routing.locales.flatMap((locale) =>
+		PAGES.map((path) => ({
+			url: abs(localePath(locale, path)),
+			alternates: {
+				languages: Object.fromEntries(
+					routing.locales.map((l) => [l, abs(localePath(l, path))]),
+				),
+			},
+		})),
+	);
 
-	const blogPostEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-		url: `https://teowenlong.vercel.app/blog/${post.slug}`,
+	// posts are English-only; the /zh copies canonicalise to these, so they stay out
+	const posts = getAllPosts().map((post) => ({
+		url: abs(`/blog/${post.slug}`),
 		lastModified: new Date(post.date),
-		changeFrequency: "monthly",
-		priority: 0.8,
 	}));
 
-	return [
-		{
-			url: "https://teowenlong.vercel.app",
-			lastModified: new Date(),
-			changeFrequency: "yearly",
-			priority: 1,
-		},
-		{
-			url: "https://teowenlong.vercel.app/about",
-			lastModified: new Date(),
-			changeFrequency: "yearly",
-			priority: 1,
-		},
-		{
-			url: "https://teowenlong.vercel.app/projects",
-			lastModified: new Date(),
-			changeFrequency: "monthly",
-			priority: 1,
-		},
-		{
-			url: "https://teowenlong.vercel.app/blog",
-			lastModified: new Date(),
-			changeFrequency: "weekly",
-			priority: 1,
-		},
-		{
-			url: "https://teowenlong.vercel.app/contact",
-			lastModified: new Date(),
-			changeFrequency: "yearly",
-			priority: 1,
-		},
-		...blogPostEntries,
-	];
+	return [...pages, ...posts];
 }

@@ -10,7 +10,7 @@ const NotFoundPage = () => {
 
 	return (
 		<div className={cn(tile, "flex flex-col items-start gap-5 p-8 sm:p-10")}>
-			<p className="font-bold leading-none text-8xl font-display text-primary">
+			<p className="font-bold leading-none text-8xl font-display text-primary-strong">
 				404
 			</p>
 			<h1 className="text-3xl font-bold font-display">Page not found</h1>

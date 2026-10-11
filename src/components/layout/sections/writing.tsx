@@ -1,9 +1,8 @@
 "use client";
 
-import dayjs from "dayjs";
 import { ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { arrowNext, tile, tileLabel, tileLift } from "@/components/ui/tile";
+import { arrowNext, tile, tileLift } from "@/components/ui/tile";
 import { SITE_CONFIG } from "@/constants";
 import type { BlogPostMeta } from "@/constants/types";
 import { Link } from "@/i18n/routing";
@@ -21,9 +20,8 @@ const WritingSection = ({ post }: { post?: BlogPostMeta }) => {
 					href={post ? `/blog/${post.slug}` : "/blog"}
 					className={cn(tile, tileLift, "group flex flex-col h-full gap-3 p-6")}
 				>
-					<span className={tileLabel}>
-						{t("home.writing")}
-						{post && ` · ${dayjs(post.date).format("MMM YYYY")}`}
+					<span className="text-sm text-muted-foreground">
+						{t("home.latest_post")}
 					</span>
 					<span className="text-xl font-medium leading-snug font-display">
 						{post ? post.title : t("home.all_writing")}
@@ -39,10 +37,7 @@ const WritingSection = ({ post }: { post?: BlogPostMeta }) => {
 						"group flex flex-col justify-between h-full gap-5 p-6 rounded-2xl bg-primary text-primary-foreground",
 					)}
 				>
-					<span className="flex items-start justify-between gap-3">
-						<span className={cn(tileLabel, "text-primary-foreground/70")}>
-							{t("home.contact")}
-						</span>
+					<span className="flex justify-end">
 						<span className="grid shrink-0 rounded-full size-9 place-items-center border transition-colors duration-200 motion-reduce:transition-none border-primary-foreground/30 group-hover:bg-primary-foreground group-hover:text-primary">
 							<ArrowRightIcon
 								aria-hidden="true"

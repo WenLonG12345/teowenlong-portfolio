@@ -4,8 +4,12 @@ import { ArrowRightIcon, ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { OriginBadge } from "@/components/ui/origin-badge";
-import { arrowOut, tile, tileLabel, tileLift } from "@/components/ui/tile";
-import { ALL_PROJECTS as ALL, FEATURED_PROJECTS } from "@/constants";
+import { arrowOut, tile, tileLift } from "@/components/ui/tile";
+import {
+	ALL_PROJECTS as ALL,
+	FEATURED_PROJECTS,
+	projectAlt,
+} from "@/constants";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
 import { Cascade, CascadeItem } from "@/utils/motion-div";
@@ -13,6 +17,8 @@ import { Cascade, CascadeItem } from "@/utils/motion-div";
 const FEATURED = FEATURED_PROJECTS.map((name) =>
 	ALL.find((p) => p.name === name),
 ).filter((p) => p !== undefined);
+
+const STUDIO_URL = "https://www.twlworks.com";
 
 const zoom =
 	"object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:transition-none";
@@ -27,7 +33,27 @@ const ProjectSection = () => {
 
 	return (
 		<section id="projects" className="flex flex-col gap-4">
-			<h2 className="text-2xl font-bold font-display">{t("home.projects")}</h2>
+			<div className="flex flex-col gap-1">
+				<h2 className="text-2xl font-bold font-display">
+					{t("home.projects")}
+				</h2>
+				{/* a quiet note, not a pitch: explains the amber badges without leading with the side business */}
+				<p className="text-sm text-muted-foreground">
+					{t.rich("home.studio_note", {
+						studio: (chunks) => (
+							<a
+								href={STUDIO_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="font-medium underline group text-foreground decoration-border underline-offset-4 hover:decoration-primary"
+							>
+								{chunks}
+								<ArrowUpRightIcon aria-hidden="true" className={arrowOut} />
+							</a>
+						),
+					})}
+				</p>
+			</div>
 			<Cascade className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 md:grid-cols-3">
 				<CascadeItem className="sm:col-span-2">
 					<a
@@ -42,7 +68,7 @@ const ProjectSection = () => {
 					>
 						<Image
 							src={lead.imageUrl}
-							alt={lead.alt}
+							alt={projectAlt(lead, locale)}
 							fill
 							sizes="(min-width: 768px) 520px, 100vw"
 							className={zoom}
@@ -75,7 +101,7 @@ const ProjectSection = () => {
 							<div className="relative overflow-hidden aspect-16/10">
 								<Image
 									src={project.imageUrl}
-									alt={project.alt}
+									alt={projectAlt(project, locale)}
 									fill
 									sizes="(min-width: 768px) 260px, 100vw"
 									className={zoom}
@@ -103,10 +129,7 @@ const ProjectSection = () => {
 							"group flex flex-col justify-between h-full gap-6 p-5 border-[1.5px] border-dashed rounded-2xl border-primary min-h-36",
 						)}
 					>
-						<span className="flex items-start justify-between gap-3">
-							<span className={cn(tileLabel, "text-primary-strong")}>
-								{t("home.archive")}
-							</span>
+						<span className="flex justify-end">
 							<span className="grid shrink-0 rounded-full size-9 place-items-center border transition-colors duration-200 motion-reduce:transition-none border-primary/50 text-primary-strong group-hover:bg-primary group-hover:text-primary-foreground">
 								<ArrowRightIcon
 									aria-hidden="true"

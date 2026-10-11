@@ -91,6 +91,29 @@ export const Navbar = () => {
 				>
 					{t("rail.tagline")}
 				</p>
+				{/* below lg the status tile folds into this line so the first screen isn't all chrome */}
+				{isHome && (
+					<p className="flex flex-wrap items-center text-sm gap-x-4 gap-y-1 lg:hidden">
+						<span className="inline-flex items-center w-full gap-2 font-semibold text-primary-strong">
+							<span className="rounded-full size-2 bg-primary" />
+							{t("rail.status")}
+						</span>
+						<Link
+							href={SITE_CONFIG.resume.url}
+							target="_blank"
+							className={cn("group py-1 font-semibold rounded", focusRing)}
+						>
+							{t("rail.resume")}
+							<ArrowUpRightIcon aria-hidden="true" className={arrowOut} />
+						</Link>
+						<a
+							href={`mailto:${SITE_CONFIG.contact.email}`}
+							className={cn("py-1 font-semibold rounded", focusRing)}
+						>
+							{t("rail.email")}
+						</a>
+					</p>
+				)}
 			</div>
 
 			{/* status + the two actions a recruiter wants. Amber is the signal (wash, border, dot, text), not the
@@ -99,8 +122,7 @@ export const Navbar = () => {
 				{...enter(70)}
 				className={cn(
 					rise,
-					"flex flex-col gap-4 p-5 border rounded-2xl border-primary/30 bg-primary/8",
-					!isHome && "hidden lg:flex",
+					"hidden flex-col gap-4 p-5 border rounded-2xl border-primary/30 bg-primary/8 lg:flex",
 				)}
 			>
 				<p className="flex items-center gap-2.5 text-sm font-semibold text-primary-strong">
@@ -131,11 +153,16 @@ export const Navbar = () => {
 				</div>
 			</div>
 
-			{/* nav: the active pill slides between rows (layoutId) since the rail persists across routes */}
+			{/* nav: the active pill slides between rows (layoutId) since the rail persists across routes.
+			    Below lg it's a fixed bottom tab bar (sticky can't escape this <header>'s box). */}
 			<nav
 				{...enter(140)}
 				aria-label={t("rail.nav")}
-				className={cn(rise, tile, "p-1.5")}
+				className={cn(
+					rise,
+					tile,
+					"p-1.5 max-lg:fixed max-lg:inset-x-3 max-lg:bottom-[max(0.75rem,env(safe-area-inset-bottom))] max-lg:z-40 max-lg:bg-card/90 max-lg:shadow-lg max-lg:backdrop-blur-md",
+				)}
 			>
 				<ul className="grid grid-cols-5 gap-0.5 list-none lg:flex lg:flex-col">
 					{NAV_ITEM_LIST.map(({ href, label }) => {

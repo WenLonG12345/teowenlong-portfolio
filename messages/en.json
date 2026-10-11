@@ -10,14 +10,9 @@
 		"experience": "Experience",
 		"full_experience": "Full experience",
 		"projects": "Projects",
-		"archive": "Archive",
 		"all_projects": "All {count} projects",
-		"writing": "Writing",
 		"all_writing": "All writing",
-		"contact": "Contact",
 		"contact_cta": "Let's talk about the role",
-		"now_building": "Now building",
-		"now_title": "ILMUChat at YTL AI Labs",
 		"range": "Range",
 		"layers": {
 			"interface": "Interface",
@@ -29,7 +24,23 @@
 		"ai_streaming": "LLM streaming",
 		"ai_voice": "Voice agents",
 		"stack": "Stack",
-		"now_body": "Malaysia's first local-language AI assistant. I build and own its interface end to end."
+		"latest_post": "Latest post",
+		"studio_note": "Freelance builds ship through <studio>twlworks</studio>.",
+		"build": {
+			"label": "What I build",
+			"ai": {
+				"title": "AI products",
+				"body": "Chat and voice interfaces on top of LLMs."
+			},
+			"web": {
+				"title": "Web platforms",
+				"body": "High-traffic sites and business systems."
+			},
+			"mobile": {
+				"title": "Mobile apps",
+				"body": "Android and iOS apps on Google Play and the App Store."
+			}
+		}
 	},
 	"stats": {
 		"badge": "My Impact",

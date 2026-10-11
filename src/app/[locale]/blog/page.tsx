@@ -5,6 +5,7 @@ import type { MetadataProps } from "@/constants/types";
 import { getMediumArticles } from "@/utils/api";
 import { getAllPosts } from "@/utils/blog";
 import getQueryClient from "@/utils/getQueryClient";
+import { pageMetadata } from "@/utils/seo";
 import BlogClient from "./Blog";
 
 export async function generateMetadata({
@@ -13,25 +14,12 @@ export async function generateMetadata({
 	const { locale } = await params;
 	const t = await getTranslations({ locale });
 
-	return {
+	return pageMetadata({
+		locale,
+		path: "/blog",
 		title: t("blog.title"),
 		description: t("blog.lede"),
-		icons: { icon: "/favicon.ico" },
-		openGraph: {
-			type: "website",
-			title: t("blog.title"),
-			url: "/blog",
-			description: t("blog.lede"),
-			images: ["/og_image.png"],
-		},
-		twitter: {
-			card: "summary_large_image",
-			title: t("blog.title"),
-			site: "/blog",
-			description: t("blog.lede"),
-			images: ["/og_image.png"],
-		},
-	};
+	});
 }
 
 const BlogPage = async () => {

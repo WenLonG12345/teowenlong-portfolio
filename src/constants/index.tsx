@@ -1,11 +1,13 @@
 import type { NavItemProps } from "./types";
 
 export const METADATA = {
-	title: "Teo | Software Engineer",
-	titleTemplate: "%s | Teo",
+	name: "Teo Wen Long",
+	title: "Teo Wen Long — Software Engineer in Malaysia",
+	titleTemplate: "%s | Teo Wen Long",
 	description:
-		"Software Engineer helping businesses through digital transformation. I design and deliver the web and mobile platforms they run on.",
-	url: "https://teowenlong.vercel.app/",
+		"Software Engineer helping businesses through digital transformation. I design and deliver the web, mobile and AI products they run on.",
+	// one place to change when a custom domain is attached; no trailing slash
+	url: "https://teowenlong.vercel.app",
 };
 
 export const NAV_ITEM_LIST: NavItemProps[] = [
@@ -78,7 +80,6 @@ export const PROJECT_LIST: {
 	[x: string]: {
 		name: string;
 		imageUrl: string;
-		alt: string;
 		summary: string;
 		summary_zh?: string;
 		// two-to-four words for bento tiles; only featured projects need it
@@ -94,7 +95,6 @@ export const PROJECT_LIST: {
 			tagline: "AI assistant that speaks Malaysian",
 			tagline_zh: "会说马来西亚话的 AI 助手",
 			imageUrl: "/images/ilmuchat.jpg",
-			alt: "ilmuchat",
 			summary:
 				"Malaysia's First AI Assistant that Speaks Malaysian, Think Lokal. Available with text, voice and visual.",
 			summary_zh:
@@ -107,7 +107,6 @@ export const PROJECT_LIST: {
 			tagline: "AI voice agents",
 			tagline_zh: "AI 语音代理",
 			imageUrl: "/images/revocall.png",
-			alt: "revocall",
 			summary:
 				"AI voice agent management platform for enterprises to build, deploy and manage AI voice agents",
 			summary_zh:
@@ -118,7 +117,6 @@ export const PROJECT_LIST: {
 		{
 			name: "Reflect ReVa",
 			imageUrl: "/images/reva.png",
-			alt: "reva",
 			summary:
 				"AI voice agent for Arab Bank digital mobile app (Reflect), providing customers with a seamless banking experience through natural language interactions",
 			summary_zh:
@@ -130,7 +128,6 @@ export const PROJECT_LIST: {
 			tagline: "2M+ monthly users",
 			tagline_zh: "月活跃用户 200 万+",
 			imageUrl: "/images/astro_vortals.png",
-			alt: "AstroVortals",
 			summary:
 				"Discover Malaysia's premier news portals, offering comprehensive coverage of diverse topics and boasting over 2 million monthly active users (MAU)",
 			summary_zh:
@@ -141,7 +138,6 @@ export const PROJECT_LIST: {
 		{
 			name: "Ecosystem Design System",
 			imageUrl: "/images/eco-design-system.png",
-			alt: "eco-design-system",
 			summary:
 				"Design System built with StorybookJS based on design token and publish as open-source in NPM",
 			summary_zh:
@@ -152,7 +148,6 @@ export const PROJECT_LIST: {
 		{
 			name: "Digital Fortress Assistant Portal",
 			imageUrl: "/images/dfap.png",
-			alt: "dfap",
 			summary:
 				"CMS Assistant Portal for building website with components and make configuration easier",
 			summary_zh: "用于构建带有组件的网站并简化配置的 CMS 辅助门户。",
@@ -163,7 +158,6 @@ export const PROJECT_LIST: {
 			name: "Chativo",
 			imageUrl:
 				"https://play-lh.googleusercontent.com/tgLiP-ZL-sBuZt2RzDU1tN88Cp7NPbdjF7c0311_dui86f1HrAQM0j4gXaRE0pb5zW0=s360-rw",
-			alt: "chativo",
 			summary:
 				"Enterprise ready live-chat base customer support & engagement software",
 			summary_zh: "企业级实时聊天客户支持和互动软件。",
@@ -174,7 +168,6 @@ export const PROJECT_LIST: {
 			name: "ChativoV",
 			imageUrl:
 				"https://play-lh.googleusercontent.com/5U5s7sSIuzP6CygPkU2ZYxyOXT-MKv7oiyweGKHgkEgVameOcYt44rnXqCTWZJNZgVqn=s360-rw",
-			alt: "chativo-v",
 			summary:
 				"Live-chat specifically designed for visitors to communicate with real-time agent instantly",
 			summary_zh: "专为访客设计的实时聊天，可立即与实时代理沟通。",
@@ -188,7 +181,6 @@ export const PROJECT_LIST: {
 			tagline: "Class booking for a Muay Thai gym",
 			tagline_zh: "泰拳馆课程预约系统",
 			imageUrl: "/images/hercules.png",
-			alt: "hercules-factory",
 			summary:
 				"Class booking and membership system for a Muay Thai gym — members book their slot online, coaches see who is coming, and the front desk tracks packages and attendance in one place",
 			summary_zh:
@@ -201,7 +193,6 @@ export const PROJECT_LIST: {
 			tagline: "Property and tenancy platform",
 			tagline_zh: "房产与租赁管理平台",
 			imageUrl: "/images/regal.png",
-			alt: "regal-global",
 			summary:
 				"Property listing and tenancy management platform giving tenants, landlords, agents and admins a single system for listings, applications, documents and approvals",
 			summary_zh:
@@ -214,7 +205,6 @@ export const PROJECT_LIST: {
 			tagline: "TCG community platform",
 			tagline_zh: "集换式卡牌社区平台",
 			imageUrl: "/images/tcgkl.png",
-			alt: "tcgkl",
 			summary:
 				"Malaysia's premier trading card game (TCG) convention and community platform, organizing major events for collectors and players of Pokémon, One Piece, Magic: The Gathering, and more",
 			summary_zh:
@@ -232,7 +222,6 @@ export const PROJECT_LIST: {
 		{
 			name: "MagGrading",
 			imageUrl: "/images/maggrading.webp",
-			alt: "maggrading",
 			summary:
 				"Malaysia-based professional card grading service with human grading against one published standard, QR-verified certificates, and a 3-4 week turnaround, with no overseas shipping for Pokémon, One Piece, Digimon, sports and local cards",
 			summary_zh:
@@ -243,7 +232,6 @@ export const PROJECT_LIST: {
 		{
 			name: "AeroGrading",
 			imageUrl: "/images/aerograding.jpg",
-			alt: "aerograding",
 			summary:
 				"Malaysian card submission and custody platform that sends collectors' cards to PSA, CGC, Beckett or MAG, with intake photography, restoration quotes, ringgit pricing, and WhatsApp status tracking from intake to return",
 			summary_zh:
@@ -254,7 +242,6 @@ export const PROJECT_LIST: {
 		{
 			name: "HaiKahLang Inventory Management System",
 			imageUrl: "/images/hkl.png",
-			alt: "hkl",
 			summary:
 				"Inventory management system for HaiKahLang, a local F&B business in Malaysia, built with React and Golang",
 			summary_zh:
@@ -264,7 +251,6 @@ export const PROJECT_LIST: {
 		{
 			name: "N1X Space",
 			imageUrl: "/images/n1x-space.png",
-			alt: "n1x_space",
 			summary:
 				"Personal portfolio for Nyx Zhu, a talented interior designer, showcasing her impressive projects and design philosophy",
 			summary_zh:
@@ -275,7 +261,6 @@ export const PROJECT_LIST: {
 		{
 			name: "Ideasss",
 			imageUrl: "/images/ideasss.png",
-			alt: "ideasss",
 			summary:
 				"NFT Platform for Creativity and Ideas,  First marketplace to connect demanders and designers through transparent competition",
 			summary_zh:
@@ -286,7 +271,6 @@ export const PROJECT_LIST: {
 		{
 			name: "3CommasClub NFT",
 			imageUrl: "/images/3commas.png",
-			alt: "3commasclub",
 			summary:
 				"NFC business card builder linked with unique NFT. Build business profile embed with NFC that allows others to scan and connect.",
 			summary_zh:
@@ -297,7 +281,6 @@ export const PROJECT_LIST: {
 		{
 			name: "KlusterX Player Portal",
 			imageUrl: "/images/klusterx_player.png",
-			alt: "klusterx",
 			summary:
 				"Online Gaming Player Portal, built with NextJS, TailwindCSS and MantineUI",
 			summary_zh:
@@ -307,7 +290,6 @@ export const PROJECT_LIST: {
 		{
 			name: "KlusterX Tenant Portal",
 			imageUrl: "/images/klusterx_tenant.png",
-			alt: "klusterx",
 			summary: "Online Gaming Tenant Portal, built with Ant Design Pro",
 			summary_zh: "在线游戏租户门户，使用 Ant Design Pro 构建。",
 			tech: ["UmiJS", "Ant Design", "Ant Design Pro"],
@@ -317,7 +299,6 @@ export const PROJECT_LIST: {
 		{
 			name: "React Date Dropdown",
 			imageUrl: "/images/date-picker.png",
-			alt: "date-picker",
 			summary:
 				"React Date Dropdown library. Highly customisable and provide individuals components for years, months and days",
 			summary_zh:
@@ -327,7 +308,6 @@ export const PROJECT_LIST: {
 		{
 			name: "CM Script",
 			imageUrl: "/images/cm-script.png",
-			alt: "klusterx",
 			summary: "CLI script for linting your commit message 🎉",
 			summary_zh: "用于检查提交消息的 CLI 脚本 🎉。",
 			tech: ["Javascript", "Bash", "CLI"],
@@ -422,6 +402,17 @@ export const ALL_PROJECTS = [
 	...WORKS.slice(FREELANCE.length),
 	...withCategory("project.opensource"),
 ];
+
+type Project = (typeof ALL_PROJECTS)[number];
+
+/** Image alt from data that already describes the project, e.g. "Regal Global: Property and tenancy platform". */
+export const projectAlt = (p: Project, locale = "en") => {
+	const line =
+		(locale === "zh" ? p.tagline_zh : p.tagline) ??
+		(locale === "zh" ? p.summary_zh : undefined) ??
+		p.summary;
+	return `${p.name}: ${line.split(/[.,—，。]/)[0].trim()}`;
+};
 
 // home tiles: the first one renders wide
 export const FEATURED_PROJECTS = [

@@ -7,7 +7,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { OriginBadge } from "@/components/ui/origin-badge";
 import { arrowOut, tile, tileLift } from "@/components/ui/tile";
-import { ALL_PROJECTS as ALL, type PROJECT_LIST } from "@/constants";
+import {
+	ALL_PROJECTS as ALL,
+	type PROJECT_LIST,
+	projectAlt,
+} from "@/constants";
 import { cn } from "@/utils/cn";
 
 type Category = keyof typeof PROJECT_LIST | "all";
@@ -80,7 +84,7 @@ const ProjectsClient = () => {
 								<div className="relative overflow-hidden aspect-16/10 bg-muted">
 									<Image
 										src={project.imageUrl}
-										alt={project.alt}
+										alt={projectAlt(project, locale)}
 										fill
 										sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw"
 										className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"

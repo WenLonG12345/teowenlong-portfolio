@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/style/noDescendingSpecificity: ul and ol */
 /* Hallmark · genre: modern-minimal · macrostructure: Feature Stack + Bento tiles · design-system: design.md · designed-as-app
  * theme: custom (vibe: "warm workshop, amber signal, engineer's notebook")
- * paper oklch(95% 0.012 75) · accent oklch(62% 0.13 55) amber · Bricolage Grotesque + Manrope + JetBrains Mono
+ * paper hsl(36 38% 93%) · fill amber hsl(30 85% 55%) · text amber hsl(26 69% 38%) · Bricolage Grotesque + Manrope + JetBrains Mono
  * axes: light / grotesk-sans / warm
  */
 @import "tailwindcss";
@@ -126,20 +126,6 @@ body {
 	}
 }
 
-/* cursor-following amber glow; JS only writes --spot-x / --spot-y */
-.spotlight {
-	background: radial-gradient(
-		520px circle at var(--spot-x, 50%) var(--spot-y, -20%),
-		hsl(var(--primary) / 0.1),
-		transparent 60%
-	);
-}
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-	.spotlight {
-		display: none;
-	}
-}
-
 /* *=========== Default theme =========== */
 
 @layer base {
@@ -151,7 +137,8 @@ body {
 		--card-foreground: 30 8% 10%;
 		--popover: 0 0% 100%;
 		--popover-foreground: 30 8% 10%;
-		--primary: 27 63% 47%;
+		/* fills only: bright enough to read as amber, not brown, on the cream paper (dark ink on it ≈ 7.6:1) */
+		--primary: 30 85% 55%;
 		--primary-foreground: 30 60% 8%;
 		--primary-strong: 26 69% 38%;
 		--secondary: 36 30% 92%;
@@ -164,6 +151,7 @@ body {
 		--destructive-foreground: 0 0% 98%;
 		--border: 38 21% 86%;
 		--input: 38 21% 80%;
+		/* the fill amber is too light for a 3:1 focus ring on paper; keep the deeper one */
 		--ring: 27 63% 47%;
 		--radius: 0.75rem;
 		--chart-1: 12 76% 61%;

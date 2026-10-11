@@ -8,7 +8,7 @@ import {
 	useSpring,
 	type Variants,
 } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const MotionDiv = motion.div;
 
@@ -83,35 +83,6 @@ export const CascadeItem = ({
 		{children}
 	</motion.div>
 );
-
-/** Fixed amber glow that trails the pointer. Hidden on touch and reduced-motion via CSS. */
-export const Spotlight = () => {
-	const ref = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		let frame = 0;
-		const onMove = (e: PointerEvent) => {
-			cancelAnimationFrame(frame);
-			frame = requestAnimationFrame(() => {
-				ref.current?.style.setProperty("--spot-x", `${e.clientX}px`);
-				ref.current?.style.setProperty("--spot-y", `${e.clientY}px`);
-			});
-		};
-		window.addEventListener("pointermove", onMove, { passive: true });
-		return () => {
-			cancelAnimationFrame(frame);
-			window.removeEventListener("pointermove", onMove);
-		};
-	}, []);
-
-	return (
-		<div
-			ref={ref}
-			aria-hidden="true"
-			className="spotlight pointer-events-none fixed inset-0 -z-10"
-		/>
-	);
-};
 
 /** Thin amber bar along the top edge tracking how far the article has been read. */
 export const ReadingProgress = () => {
