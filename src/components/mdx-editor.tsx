@@ -63,7 +63,7 @@ const Editor: React.FC<EditorProps> = ({
 							<ListsToggle />
 							<InsertThematicBreak />
 							<InsertTable />
-								<InsertImage />
+							<InsertImage />
 						</>
 					),
 				}),

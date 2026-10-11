@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	type HTMLMotionProps,
-	motion,
-} from "motion/react";
+import { type HTMLMotionProps, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 export const MotionDiv = motion.div;

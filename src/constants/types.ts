@@ -40,10 +40,6 @@ export interface ProjectProps {
 	techStack?: string[];
 }
 
-
-
-
-
 export type IMediumArticle = {
 	title: string;
 	url: string;

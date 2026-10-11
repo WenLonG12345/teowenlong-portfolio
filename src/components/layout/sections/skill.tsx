@@ -1,8 +1,8 @@
 import { Marquee } from "@devnomic/marquee";
-import { useTranslations } from "next-intl";
-import { MotionSection } from "@/utils/motion-div";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { SKILL_LIST } from "@/constants";
+import { MotionSection } from "@/utils/motion-div";
 
 const SkillSetSection = () => {
 	const t = useTranslations();

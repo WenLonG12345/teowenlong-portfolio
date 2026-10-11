@@ -5,12 +5,14 @@
  * contrast where the text sits (dark stop): ink 15.8 · muted 10.1 · accent 8.7
  * worst case (light stop, right edge): ink 6.8 · muted 4.3 · accent 3.7 — all pass at size
  */
-import { readFile } from "node:fs/promises";
+
 import { readFileSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "Teo — Software Engineer helping businesses through digital transformation";
+export const alt =
+	"Teo — Software Engineer helping businesses through digital transformation";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -73,7 +75,9 @@ export default function Image() {
 					gap: 56,
 				}}
 			>
-				<div style={{ display: "flex", flexDirection: "column", maxWidth: 690 }}>
+				<div
+					style={{ display: "flex", flexDirection: "column", maxWidth: 690 }}
+				>
 					<div
 						style={{
 							display: "flex",
