@@ -8,6 +8,8 @@ import { LuMoon, LuSun } from "react-icons/lu";
 import { Button } from "../ui/button";
 
 const REVEAL_MS = 550;
+/** Keep in sync with the `.theme-fade` duration in globals.css. */
+const FADE_MS = 300;
 
 export const ToggleTheme = () => {
 	const { resolvedTheme, setTheme } = useTheme();
@@ -35,8 +37,22 @@ export const ToggleTheme = () => {
 		const reduceMotion = window.matchMedia(
 			"(prefers-reduced-motion: reduce)",
 		).matches;
-		if (!document.startViewTransition || reduceMotion) {
+		if (reduceMotion) {
 			apply();
+			return;
+		}
+
+		// Touch devices get a plain colour cross-fade. Mobile browsers animate a
+		// view-transition *snapshot*, and when the toolbar resizes the viewport
+		// mid-transition that snapshot is stretched — the page visibly squashes
+		// and springs back. A fade never takes a snapshot, so layout can't move.
+		const desktop = window.matchMedia(
+			"(hover: hover) and (pointer: fine)",
+		).matches;
+		if (!document.startViewTransition || !desktop) {
+			root.classList.add("theme-fade");
+			apply();
+			window.setTimeout(() => root.classList.remove("theme-fade"), FADE_MS);
 			return;
 		}
 
