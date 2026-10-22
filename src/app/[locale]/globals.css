@@ -505,3 +505,19 @@ body {
 		list-style: revert;
 	}
 }
+
+/* =========== Theme toggle: circular reveal (View Transitions API) ===========
+ * ToggleTheme animates clip-path on the new snapshot; turn off the default
+ * cross-fade so only the circle moves. Browsers without the API (or with
+ * reduced motion) switch instantly. */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+	z-index: 1;
+}
+::view-transition-new(root) {
+	z-index: 2;
+}
