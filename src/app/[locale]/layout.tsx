@@ -8,6 +8,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import Footer from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import ReactQueryProvider from "@/components/layout/react-query-provider";
+import { SwipeTabs } from "@/components/layout/swipe-tabs";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { METADATA } from "@/constants";
 import { routing } from "@/i18n/routing";
@@ -111,11 +112,15 @@ export default async function RootLayout({
 								{/* Feature Stack shell: pinned rail left, bento content right */}
 								<div className="flex flex-col max-w-6xl px-5 mx-auto sm:px-8 lg:flex-row lg:gap-16 lg:px-10">
 									<Navbar />
-									<main className="flex-1 min-w-0 max-lg:pb-20 lg:py-20">
+									<main
+										data-swipe-surface
+										className="flex-1 min-w-0 max-lg:pb-20 lg:py-20"
+									>
 										{children}
 										<Footer />
 									</main>
 								</div>
+								<SwipeTabs />
 							</MotionProvider>
 						</ThemeProvider>
 						<Analytics />
