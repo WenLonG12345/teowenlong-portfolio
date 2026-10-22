@@ -35,7 +35,7 @@ export const NAV_ITEM_LIST: NavItemProps[] = [
 
 export const SITE_CONFIG = {
 	resume: {
-		url: "https://drive.google.com/file/d/1IGWhqAmQWWvcd-ytsG7qAuSIF54ZDLtY/view",
+		url: "https://drive.google.com/file/d/1wq9QFshaEaeOdoGPnJd48lSKdezH01kN/view",
 		name: "home.resume",
 	},
 	contact: {
